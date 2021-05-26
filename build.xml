@@ -1,0 +1,78 @@
+<project name="AntLab3" basedir=".">
+    <property file="build.properties"/>
+    <path id="classpath.test">
+        <pathelement location="${junit.lib}"/>
+        <pathelement location="${hamcrest-core}"/>
+        <pathelement location="${ant.junit.lib}"/>
+        <pathelement location="${log.lib}"/>
+    </path>
+    <target name="compile" description="Compiling">
+        <mkdir dir="${compiled.classes}"/>
+        <mkdir dir="${compiled.tests}"/>
+        <javac destdir="${compiled.classes}" includeantruntime="false">
+            <src path="${main}"/>
+            <classpath>
+                <pathelement location="${compiled.classes}"/>
+                <path refid="classpath.test"/>
+            </classpath>
+        </javac>
+        <javac destdir="${compiled.tests}" includeantruntime="false">
+            <src path="${test}"/>
+            <classpath>
+                <pathelement location="${compiled.classes}"/>
+                <path refid="classpath.test"/>
+            </classpath>
+        </javac>
+    </target>
+    <target name="build" depends="compile" description="Building">
+        <jar destfile="${jar}" basedir="${compiled.classes}" compress="false" index="true">
+            <manifest>
+                <attribute name="Main-Class" value="Main"/>
+            </manifest>
+        </jar>
+    </target>
+    <target name="clean" description="Delete all *.class files">
+        <delete dir="${compiled.classes}"/>
+        <delete dir="${compiled.tests}"/>
+    </target>
+    <target name="test" depends="build" description="Testing">
+        <junit fork="true" printsummary="on">
+            <formatter type="xml"/>
+            <classpath>
+                <path refid="classpath.test"/>
+                <pathelement location="${compiled.classes}"/>
+                <pathelement location="${compiled.tests}"/>
+            </classpath>
+            <batchtest todir="${test.results}">
+                <fileset dir="${test}" includes="*Test*.java"/>
+            </batchtest>
+        </junit>
+    </target>
+    <target name="music" depends="build" description="Play music when build">
+        <echo>Playing music</echo>
+        <sound>
+            <success source="${music}/Success.wav"/>
+            <fail source="${music}/Fail.wav"/>
+        </sound>
+    </target>
+    <target name="alt" depends="build" description="Alt building">
+        <property file="exchange.properties"/>
+        <copy todir="${build.alt}">
+            <fileset dir="${src}"/>
+        </copy>
+        <replaceregexp file="${src}/Main.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
+        <replaceregexp file="${src}/Shot.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
+        <replaceregexp file="${src}/ShotsStorage.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
+        <replaceregexp file="${src}/UserInterface.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
+
+        <move file="${src}/${old.shot}.java" tofile="${src}/${new.shot}.java"/>
+
+        <antcall target="build"/>
+
+        <delete dir="${src}"/>
+        <copy todir="${src}">
+            <fileset dir="${build.alt}"/>
+        </copy>
+
+    </target>
+</project>
