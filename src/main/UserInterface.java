@@ -33,7 +33,7 @@ public class UserInterface {
     private void writeHelp() {
         System.out.println("1 - shot");
         System.out.println("2 - print shots");
-        System.out.print("3 - exit");
+        System.out.println("3 - exit");
     }
 
     private void getShot() {

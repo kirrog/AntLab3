@@ -2,7 +2,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ShotTest {
+public class ShotTest {
+
+    public ShotTest(){
+
+    }
 
     private double questionR[] = new double[]{1, 1.5, 2, 2.5, 3};
 
@@ -12,7 +16,7 @@ class ShotTest {
     private boolean answerAxes[] = new boolean[]{true, true, true, false, true, true, false, true, true, false, true, true, false};
 
     @Test
-    void checkAxes() {
+    public void checkAxes() {
         boolean resultAnswer[] = new boolean[answerAxes.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerAxes.length; i++) {
@@ -28,7 +32,7 @@ class ShotTest {
     private boolean answerCircle[] = new boolean[]{true, false, false, false, false, true, true};
 
     @Test
-    void checkCircle() {
+    public void checkCircle() {
         boolean resultAnswer[] = new boolean[answerCircle.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerCircle.length; i++) {
@@ -44,7 +48,7 @@ class ShotTest {
     private boolean answerTriangle[] = new boolean[]{true, false, false, false, true, true};
 
     @Test
-    void checkTriangle() {
+    public void checkTriangle() {
         boolean resultAnswer[] = new boolean[answerTriangle.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerTriangle.length; i++) {
@@ -60,7 +64,7 @@ class ShotTest {
     private boolean answerSquare[] = new boolean[]{true, true, true, true};
 
     @Test
-    void checkSquare() {
+    public void checkSquare() {
         boolean resultAnswer[] = new boolean[answerSquare.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerSquare.length; i++) {
@@ -76,7 +80,7 @@ class ShotTest {
     private boolean answerVoid[] = new boolean[]{false, false, false, false};
 
     @Test
-    void checkVoid() {
+    public void checkVoid() {
         boolean resultAnswer[] = new boolean[answerVoid.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerVoid.length; i++) {
@@ -95,7 +99,7 @@ class ShotTest {
     private boolean answerRandNegNeg[] = new boolean[]{true, true, true, true, true, true, true, true, true, true};
 
     @Test
-    void checkRandPosPos() {
+    public void checkRandPosPos() {
         boolean resultAnswer[] = new boolean[answerRandPosPos.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerRandPosPos.length; i++) {
@@ -106,7 +110,7 @@ class ShotTest {
     }
 
     @Test
-    void checkRandNegPos() {
+    public void checkRandNegPos() {
         boolean resultAnswer[] = new boolean[answerRandNegPos.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerRandNegPos.length; i++) {
@@ -117,7 +121,7 @@ class ShotTest {
     }
 
     @Test
-    void checkRandPosNeg() {
+    public void checkRandPosNeg() {
         boolean resultAnswer[] = new boolean[answerRandPosNeg.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerRandPosNeg.length; i++) {
@@ -128,7 +132,7 @@ class ShotTest {
     }
 
     @Test
-    void checkRandNegNeg() {
+    public void checkRandNegNeg() {
         boolean resultAnswer[] = new boolean[answerRandNegNeg.length];
         for (int j = 0; j < questionR.length; j++) {
             for (int i = 0; i < answerRandNegNeg.length; i++) {

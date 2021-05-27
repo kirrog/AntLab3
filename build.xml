@@ -26,8 +26,10 @@
     </target>
     <target name="build" depends="compile" description="Building">
         <jar destfile="${jar}" basedir="${compiled.classes}" compress="false" index="true">
+            <zipgroupfileset dir="." includes="${log.lib}"/>
             <manifest>
-                <attribute name="Main-Class" value="Main"/>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Version" value="${version}"/>
             </manifest>
         </jar>
     </target>
@@ -36,7 +38,7 @@
         <delete dir="${compiled.tests}"/>
     </target>
     <target name="test" depends="build" description="Testing">
-        <junit fork="true" printsummary="on">
+        <junit showoutput="yes" printsummary="on">
             <formatter type="xml"/>
             <classpath>
                 <path refid="classpath.test"/>
@@ -60,19 +62,32 @@
         <copy todir="${build.alt}">
             <fileset dir="${src}"/>
         </copy>
-        <replaceregexp file="${src}/Main.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
-        <replaceregexp file="${src}/Shot.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
-        <replaceregexp file="${src}/ShotsStorage.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
-        <replaceregexp file="${src}/UserInterface.java" match="${old.shot}" replace="${new.shot}" byline="true"/>
+        <replaceregexp file="${main}/Main.java" match="${old.shot}" replace="${new.shot}" byline="true" flags="g"/>
+        <replaceregexp file="${main}/Shot.java" match="${old.shot}" replace="${new.shot}" byline="true" flags="g"/>
+        <move file="${main}/${old.shot}.java" tofile="${main}/${new.shot}.java"/>
+        <replaceregexp file="${main}/ShotsStorage.java" match="${old.shot}" replace="${new.shot}" byline="true"
+                       flags="g"/>
+        <move file="${main}/${old.shotsstorage}.java" tofile="${main}/${new.shotsstorage}.java"/>
+        <replaceregexp file="${main}/UserInterface.java" match="${old.shot}" replace="${new.shot}" byline="true"
+                       flags="g"/>
+        <replaceregexp file="${test}/ShotTest.java" match="${old.shot}" replace="${new.shot}" byline="true" flags="g"/>
+        <move file="${test}/${old.shottest}.java" tofile="${test}/${new.shottest}.java"/>
 
-        <move file="${src}/${old.shot}.java" tofile="${src}/${new.shot}.java"/>
-
+        <antcall target="clean"/>
         <antcall target="build"/>
 
         <delete dir="${src}"/>
         <copy todir="${src}">
             <fileset dir="${build.alt}"/>
         </copy>
+        <delete dir="${build.alt}"/>
 
     </target>
+
+    <!--    <target name="change">-->
+    <!--        <property file="exchange.properties"/>-->
+    <!--    </target>-->
+    <!--    <target name="run" depends="build">-->
+    <!--        <java jar="${jar}" fork="true"/>-->
+    <!--    </target>-->
 </project>
